@@ -40,7 +40,14 @@ class MassScannersModelAdmin(admin.ModelAdmin):
 
 class SessionInline(admin.TabularInline):
     model = CowrieSession
-    fields = ["source", "start_time", "duration", "credentials", "interaction_count", "commands"]
+    fields = [
+        "source",
+        "start_time",
+        "duration",
+        "credentials",
+        "interaction_count",
+        "commands",
+    ]
     readonly_fields = fields
     show_change_link = True
     extra = 0
@@ -49,7 +56,16 @@ class SessionInline(admin.TabularInline):
 
 @admin.register(CowrieSession)
 class CowrieSessionModelAdmin(admin.ModelAdmin):
-    list_display = ["session_id", "start_time", "duration", "login_attempt", "credentials", "command_execution", "interaction_count", "source"]
+    list_display = [
+        "session_id",
+        "start_time",
+        "duration",
+        "login_attempt",
+        "credentials",
+        "command_execution",
+        "interaction_count",
+        "source",
+    ]
     search_fields = ["source__name"]
     search_help_text = ["search for the IP address source"]
     raw_id_fields = ["source", "commands"]
@@ -84,7 +100,14 @@ class IOCModelAdmin(admin.ModelAdmin):
         "destination_ports",
         "login_attempts",
     ]
-    list_filter = ["type", "general_honeypot", "scanner", "payload_request", "ip_reputation", "asn"]
+    list_filter = [
+        "type",
+        "general_honeypot",
+        "scanner",
+        "payload_request",
+        "ip_reputation",
+        "asn",
+    ]
     search_fields = ["name", "related_ioc__name"]
     search_help_text = ["search for the IP address source"]
     raw_id_fields = ["related_ioc"]

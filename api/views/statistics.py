@@ -91,7 +91,11 @@ class StatisticsViewSet(viewsets.ViewSet):
         annotations = {}
         generalHoneypots = GeneralHoneypot.objects.all().filter(active=True)
         for hp in generalHoneypots:
-            annotations[hp.name] = Count("name", distinct=True, filter=Q(general_honeypot__name__iexact=hp.name.lower()))
+            annotations[hp.name] = Count(
+                "name",
+                distinct=True,
+                filter=Q(general_honeypot__name__iexact=hp.name.lower()),
+            )
         return self.__aggregation_response_static_ioc(annotations)
 
     def __aggregation_response_static_statistics(self, annotations: dict) -> Response:

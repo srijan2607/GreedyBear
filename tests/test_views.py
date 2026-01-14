@@ -49,8 +49,14 @@ class EnrichmentViewTestCase(CustomTestCase):
         self.assertIn(self.ciscoasa.name, general_honeypots)
         self.assertEqual(response.json()["ioc"]["scanner"], self.ioc.scanner)
         self.assertEqual(response.json()["ioc"]["payload_request"], self.ioc.payload_request)
-        self.assertEqual(response.json()["ioc"]["recurrence_probability"], self.ioc.recurrence_probability)
-        self.assertEqual(response.json()["ioc"]["expected_interactions"], self.ioc.expected_interactions)
+        self.assertEqual(
+            response.json()["ioc"]["recurrence_probability"],
+            self.ioc.recurrence_probability,
+        )
+        self.assertEqual(
+            response.json()["ioc"]["expected_interactions"],
+            self.ioc.expected_interactions,
+        )
 
     def test_for_invalid_authentication(self):
         """Check for a invalid authentication"""
@@ -113,8 +119,11 @@ class FeedsViewTestCase(CustomTestCase):
         iocs = response.json()["iocs"]
         # All returned IOCs should have 'log4pot' in their feed_type
         for ioc in iocs:
-            self.assertIn("log4pot", ioc["feed_type"],
-                          f"IOC {ioc['value']} should have 'log4pot' in feed_type")
+            self.assertIn(
+                "log4pot",
+                ioc["feed_type"],
+                f"IOC {ioc['value']} should have 'log4pot' in feed_type",
+            )
 
     def test_log4j_feeds_csv_format(self):
         """Test legacy log4j endpoint with CSV format."""
@@ -379,7 +388,10 @@ class GeneralHoneypotViewTestCase(CustomTestCase):
 
         response = self.client.get("/api/general_honeypot")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(set(response.json()), {"Cowrie", "Log4Pot", "Heralding", "Ciscoasa", "Ddospot", "Adbhoney"})
+        self.assertEqual(
+            set(response.json()),
+            {"Cowrie", "Log4Pot", "Heralding", "Ciscoasa", "Ddospot", "Adbhoney"},
+        )
 
     def test_200_active_general_honeypots(self):
         self.assertEqual(GeneralHoneypot.objects.count(), 5)
